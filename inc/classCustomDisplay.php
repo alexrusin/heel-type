@@ -1,5 +1,5 @@
 <?php
-class CustomShortcode {
+class CustomDisplay {
 
 	private $title;
 	private $taxonomy_name;
@@ -46,4 +46,17 @@ class CustomShortcode {
 	return $output;
 
 	}
+
+	public function cust_taxonomy_display(){
+		add_action('template_include', array($this, 'load_tax_template'));
+	}
+
+	public function load_tax_template($original_template){
+ 	if ( is_tax($this->taxonomy_name)) {
+              
+                        return plugin_dir_path(__FILE__).'../templates/taxonomy-heel_type.php';
+   	}else{
+        	return $original_template;
+        }
+ }
 }

@@ -21,7 +21,7 @@ register_activation_hook( __FILE__ , 'ht_activate');
 require_once (plugin_dir_path(__FILE__).'inc/classCustomPost.php');
 require_once (plugin_dir_path(__FILE__).'inc/classCustomTaxonomy.php');
 require_once (plugin_dir_path(__FILE__).'inc/classCustomMetabox.php');
-require_once (plugin_dir_path(__FILE__).'inc/classCustomShortcode.php');
+require_once (plugin_dir_path(__FILE__).'inc/classCustomDisplay.php');
 
 function ht_front_end_enqueue_scripts(){
 	
@@ -47,17 +47,11 @@ $ht_post = new CustomPost('Heel', 'Heels', array('thumbnail'));
 $ht_custom_tax = new CustomTaxonomy('Heel Type', 'Heel Types', $ht_post->get_slug());
 $ht_heel_description = new CustomMetabox('heel_description', 'Heel Description');
 $ht_custom_tax->add_upload_img();
-$ht_heel_type_list = new CustomShortcode($ht_custom_tax->get_slug());
+$ht_heel_type_list = new CustomDisplay($ht_custom_tax->get_slug());
 $ht_heel_type_list->display_heel_type();
+$ht_heel_type_list->cust_taxonomy_display();
 
-function ht_load_template($original_template){
- 	if ( is_tax(heel_type)) {
-              
-                        return plugin_dir_path(__FILE__).'templates/taxonomy-heel_type.php';
-   	}else{
-        	return $original_template;
-        }
- }
+
  	
-  add_action('template_include', 'ht_load_template');
+  
     
