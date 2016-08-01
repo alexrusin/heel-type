@@ -22,6 +22,7 @@ require_once (plugin_dir_path(__FILE__).'inc/classCustomPost.php');
 require_once (plugin_dir_path(__FILE__).'inc/classCustomTaxonomy.php');
 require_once (plugin_dir_path(__FILE__).'inc/classCustomMetabox.php');
 require_once (plugin_dir_path(__FILE__).'inc/classCustomDisplay.php');
+require_once (plugin_dir_path(__FILE__).'inc/classSubMenuPage.php');
 
 function ht_front_end_enqueue_scripts(){
 	
@@ -47,11 +48,9 @@ $ht_post = new CustomPost('Heel', 'Heels', array('thumbnail'));
 $ht_custom_tax = new CustomTaxonomy('Heel Type', 'Heel Types', $ht_post->get_slug());
 $ht_heel_description = new CustomMetabox('heel_description', 'Heel Description');
 $ht_custom_tax->add_upload_img();
+
 $ht_heel_type_list = new CustomDisplay($ht_custom_tax->get_slug());
 $ht_heel_type_list->display_heel_type();
 $ht_heel_type_list->cust_taxonomy_display();
 
-
- 	
-  
-    
+$ht_heel_reorder = new SubMenuPage($ht_post->get_slug(), 'Reorder Heels', 'Reorder Heels', 'manage_options', 'reorder_heels', 'reorder_heels_page');
