@@ -1,0 +1,15 @@
+#heel-types {
+	float: left;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.clear-fix {
+	clear:both;
+}
+
+.heel-text {
+	font-weight: 700;
+    font-size: 1.2em;
+    text-align: center;
+}
