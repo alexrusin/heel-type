@@ -35,7 +35,7 @@ add_action('wp_enqueue_scripts','ht_front_end_enqueue_scripts' );
 function ht_admin_enqueue_scripts(){
 	global $typenow;
 	if ( $typenow == 'heel') {
-		wp_enqueue_style( 'ht-admin-css', plugins_url( 'css/style.css', __FILE__ ) );
+		wp_enqueue_style( 'ht-admin-css', plugins_url( 'css/admin-style.css', __FILE__ ) );
 	}
 	wp_enqueue_media();
 	wp_enqueue_script( 'wp_img_upload', plugin_dir_url( __FILE__ ) . 'js/image-upload.js', array('jquery'), '0.0.2', true );
@@ -53,4 +53,14 @@ $ht_heel_type_list = new CustomDisplay($ht_custom_tax->get_slug());
 $ht_heel_type_list->display_heel_type();
 $ht_heel_type_list->cust_taxonomy_display();
 
-$ht_heel_reorder = new SubMenuPage($ht_post->get_slug(), 'Reorder Heels', 'Reorder Heels', 'manage_options', 'reorder_heels', 'reorder_heels_page');
+$args = array(
+	'parent_slug' => $ht_post->get_slug(),
+	'tax_slug'    => $ht_custom_tax->get_slug(),
+	'page_title'  => 'Reorder Heels',
+	'menu_title'  => 'Reorder Heels', 
+	'capability'  => 'manage_options',
+	'menu_slug'   => 'reorder_heels',
+	'cb_function' => 'reorder_heels_page'
+	);
+
+$ht_heel_reorder = new SubMenuPage($args);

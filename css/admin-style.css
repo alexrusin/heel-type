@@ -5,11 +5,16 @@
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	background-color:#f7f7f7;
-	max-width: 400px;
+	width: 150px;
 	padding: 10px;
 	cursor: move;
+	margin-right: 10px;
+	float:left;
 }
 #loading-animation { display: none; }
+.reordered-list {
+	width:600px;
+}
 
 /* Field styles */
 .meta-row {
@@ -44,4 +49,5 @@
 .button {
 	margin-top:10px;
 }
+
 
