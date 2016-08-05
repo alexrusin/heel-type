@@ -28,7 +28,7 @@ class CustomMetabox {
 	
 	public function description_field_callback($post){
 		wp_nonce_field( basename( __FILE__ ), 'heels_nonce' );
-		
+				
 		?>
 		 <div class="meta-row"> 
         	<div class="meta-th"> 

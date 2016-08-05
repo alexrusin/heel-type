@@ -69,7 +69,7 @@ class SubMenuPage {
 		if ( $the_query->have_posts() ) :?>
 			<ul id="custom-type-list">
 				<?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
-					<li id="<?php the_id(); ?>"><?php the_title(); ?></li>
+					<li id="<?php esc_attr(the_id()); ?>"><?php esc_html(the_title()); ?></li>
 				<?php endwhile;?>
 			</ul>
 			 <?php else : ?>

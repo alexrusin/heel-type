@@ -68,6 +68,9 @@ class CustomTaxonomy{
 	}
 	public function custom_img_field(){
 		wp_nonce_field(basename(__FILE__), 'custom_image_nonce');
+		global $pagenow, $typenow;
+		echo $pagenow;
+		echo $typenow;
 	?>
 	<div class="form-field">
 		<img id="image-tag"><br />
