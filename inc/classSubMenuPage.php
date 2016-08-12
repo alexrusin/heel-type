@@ -15,7 +15,9 @@ class SubMenuPage {
 			$this->$key = $value;
 			
 		}
+
 		add_action('admin_menu', array($this,'add_sbm_page'));
+		add_action('wp_ajax_save_sort', array($this, 'save_reorder'));
 	}
 
 	public function add_sbm_page(){
@@ -38,13 +40,17 @@ class SubMenuPage {
 	public function reorder_heels_page(){
 		$taxonomies=get_terms($this->tax_slug);
 		$tax_cat_slugs=wp_list_pluck($taxonomies, 'name', 'slug');
-		foreach ($tax_cat_slugs as $key => $value) {?>
+		$counter=1;
+		foreach ($tax_cat_slugs as $key => $value) {
+		if ($counter==1){?>
 			<h2 class="reorder-title">Reorder <?php echo $value;?>
-			<img src="<?php echo esc_url( admin_url() . 'images/loading.gif' ); ?>" id="loading-animation"/> </h2>
-
-			<?php
+				<img src="<?php echo esc_url( admin_url() . 'images/loading.gif' ); ?>" id="loading-animation"/> </h2>
+		<?php } else {?>
+			<h2 class="reorder-title-next">Reorder <?php echo $value;?>
+				<img src="<?php echo esc_url( admin_url() . 'images/loading.gif' ); ?>" id="loading-animation"/> </h2>
+		<?php }
 			$args = array(
-				'post_type' => $this->parent_slug,
+				'post_type' => $this->parent_slug, //don't really need this for query to work
 				'orderby'   => 'menu_order',
 				'order'		=> 'ASC',
 				'post_status' => 'publish',
@@ -61,7 +67,7 @@ class SubMenuPage {
 				<?php $this->admin_heels_display($query);?>
 				<div class="clear"></div>
 			</div>
-		<?php }
+		<?php $counter++; }
 	}	
 	
 
@@ -77,4 +83,29 @@ class SubMenuPage {
 			<?php endif; 
 
 	}
+
+	public function save_reorder(){
+
+		if(!check_ajax_referer('reorder-heel-types', 'security')){
+			return wp_send_json_error('Invalid Nonce');
+		}
+
+		if(!current_user_can('manage_options')){
+			return wp_send_json_error('You are not allowed to do this action');
+		}
+
+		$order=$_POST['order'];
+		$counter=0;
+
+		foreach ($order as $item_id) {
+			$post = array(
+				'ID' => (int)$item_id,
+				'menu_order' => $counter,
+			);
+
+			wp_update_post($post);
+			$counter ++;
+		}
+	}
+
 }

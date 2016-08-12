@@ -25,14 +25,30 @@
 
 									<h1 class="page-title"><?php echo get_queried_object()->name; ?></h1>
 
-							
+													
 
 								</header>
 
-							<?php if (have_posts()) : 
-							 ?>
+			<?php $args = array(
+				'orderby'   => 'menu_order',
+				'order'		=> 'ASC',
+				'post_status' => 'publish',
+				'tax_query' => array(
+					array(
+						'taxonomy' => get_queried_object()->taxonomy,
+						'field'    => 'slug',
+						'terms'    => get_queried_object()->slug,
+					),
+				),
+			);
+
+			$heel_query = new WP_Query( $args );?>
+
+
+
+							<?php if ($heel_query->have_posts()) : ?>
 							
-							<?php while (have_posts()) : the_post(); ?>
+							<?php while ($heel_query->have_posts()) : $heel_query->the_post(); ?>
                            
 							 <div id="heel-types">
 							
