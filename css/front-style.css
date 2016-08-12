@@ -13,3 +13,14 @@
     font-size: 1.2em;
     text-align: center;
 }
+
+h1.page-title {
+	text-align: center;
+}
+
+.m-single-hill .attachment-full {
+    display: block;
+    float: left;
+    margin-left: 50px;
+    margin-right: 30px;
+}

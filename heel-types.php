@@ -58,7 +58,7 @@ $ht_custom_tax = new CustomTaxonomy('Heel Type', 'Heel Types', $ht_post->get_slu
 $ht_heel_description = new CustomMetabox('heel_description', 'Heel Description');
 $ht_custom_tax->add_upload_img();
 
-$ht_heel_type_list = new CustomDisplay($ht_custom_tax->get_slug());
+$ht_heel_type_list = new CustomDisplay($ht_custom_tax->get_slug(), $ht_post->get_slug());
 $ht_heel_type_list->display_heel_type();
 $ht_heel_type_list->cust_taxonomy_display();
 

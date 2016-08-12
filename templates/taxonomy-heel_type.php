@@ -43,20 +43,31 @@
 			);
 
 			$heel_query = new WP_Query( $args );?>
-
+			
 
 
 							<?php if ($heel_query->have_posts()) : ?>
 							
 							<?php while ($heel_query->have_posts()) : $heel_query->the_post(); ?>
-                           
+    						<?php $heel_meta = get_post_meta(get_the_ID()); ?>                     
 							 <div id="heel-types">
+
+
+							<?php 
+							$heel_link_open='';
+							$heel_link_close='';
+							$heel_set=false;
+							if ( $heel_meta['heel_description'][0]!=''){
+							 	$heel_link_open = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' ;
+							 	$heel_link_close='</a>';
+
+							} ?>
 							
                 
                     <?php the_post_thumbnail('full'); ?>
                
                 
-                    <?php the_title( '<p class="heel-text"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></p>' ); ?>
+                    <?php the_title( '<p class="heel-text">'.$heel_link_open, $heel_link_close.'</p>' ); ?>
                 
               
            					 </div>

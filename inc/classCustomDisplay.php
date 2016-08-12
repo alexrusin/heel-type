@@ -3,12 +3,14 @@ class CustomDisplay {
 
 	private $title;
 	private $taxonomy_name;
+	private $post_name;
 
 	/*sets up class attributes.  $title is an optional variable*/
 
-	public function __construct($taxonomy_name, $title=''){
+	public function __construct($taxonomy_name, $post_name, $title=''){
 		$this->title = $title;
 		$this->taxonomy_name = $taxonomy_name;
+		$this->post_name= $post_name;
 	}
 
 	public function display_heel_type(){
@@ -49,14 +51,21 @@ class CustomDisplay {
 
 	public function cust_taxonomy_display(){
 		add_action('template_include', array($this, 'load_tax_template'));
+		
 	}
 
 	public function load_tax_template($original_template){
  	if ( is_tax($this->taxonomy_name)) {
               
-                        return plugin_dir_path(__FILE__).'../templates/taxonomy-heel_type.php';
+        return plugin_dir_path(__FILE__).'../templates/taxonomy-'.$this->taxonomy_name.'.php';
+   	} else if (is_singular($this->post_name)){
+   		return plugin_dir_path(__FILE__).'../templates/single-'.$this->post_name.'.php';
    	}else{
         	return $original_template;
         }
- }
+ 	}
+
+
+	
+
 }
